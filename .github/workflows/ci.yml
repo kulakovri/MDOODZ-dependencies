@@ -1,0 +1,13 @@
+name: ci
+on: [push]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages with apt
+        run: sudo apt install -y cmake libboost-all-dev
+      - name: Install SuiteSparse package
+        run: make install-suitesparse
+      - name: Install HDF5 package
+        run: make install-hdf5
