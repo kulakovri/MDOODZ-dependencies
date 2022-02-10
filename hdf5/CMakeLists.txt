@@ -475,18 +475,18 @@ endif ()
 #-----------------------------------------------------------------------------
 # Option to Build Shared and Static libs, default is both
 #-----------------------------------------------------------------------------
-option (BUILD_STATIC_LIBS "Build Static Libraries" OFF)
+option (BUILD_STATIC_LIBS "Build Static Libraries" ON)
 set (H5_ENABLE_STATIC_LIB NO)
-option (BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+option (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
 set (H5_ENABLE_SHARED_LIB NO)
-option (ONLY_SHARED_LIBS "Only Build Shared Libraries" ON)
+option (ONLY_SHARED_LIBS "Only Build Shared Libraries" OFF)
 mark_as_advanced (ONLY_SHARED_LIBS)
 
 if (BUILD_STATIC_LIBS)
-  set (H5_ENABLE_STATIC_LIB NO)
+  set (H5_ENABLE_STATIC_LIB YES)
 endif ()
 if (BUILD_SHARED_LIBS)
-  set (H5_ENABLE_SHARED_LIB YES)
+  set (H5_ENABLE_SHARED_LIB NO)
 endif ()
 
 # Force only shared libraries if all OFF
@@ -507,6 +507,12 @@ else ()
   set (tgt_file_ext "-shared")
 endif ()
 
+#-----------------------------------------------------------------------------
+# perl is used in some optional src and tests, check availability
+find_package (Perl)
+if (PERL_FOUND)
+  set (H5_PERL_FOUND YES)
+endif ()
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
