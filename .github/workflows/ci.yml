@@ -14,3 +14,5 @@ jobs:
         run: sudo apt install -y cmake
       - name: Install HDF5 package
         run: make install-hdf5
+      - name: Install Suitesparse package
+        run: make install-suitesparse
