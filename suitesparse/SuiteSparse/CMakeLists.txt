@@ -55,7 +55,6 @@ set(SUBPROJECTS_TO_ADD
 	KLU
 	LDL
 	UMFPACK
-	SPQR
 	#CACHE STRING "list of all sub-directories to add to cmake build"
 )
 
