@@ -2,4 +2,4 @@ install-hdf5:
 	cd hdf5 && cmake -S . -B _build -DCMAKE_INSTALL_PREFIX=install && cd _build && cmake --build . -j --target install
 
 install-suitesparse:
-	cd suitesparse && cmake BUILD_METIS=0 -S . -B _build -DCMAKE_INSTALL_PREFIX=install && cd _build && cmake --build . -j --target suitesparseconfig amd btf camd ccolamd colamd cholmod cxsparse umfpack
+	cd suitesparse && cmake BUILD_METIS=0 -S . -B _build -DCMAKE_INSTALL_PREFIX=install && cd _build && cmake --build . -j --target install suitesparseconfig amd btf camd ccolamd colamd cholmod cxsparse umfpack
