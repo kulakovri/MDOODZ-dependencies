@@ -59,6 +59,11 @@
 #ifndef MPICH_SKIP_MPICXX
 #define MPICH_SKIP_MPICXX 1
 #endif
+#ifndef OMPI_SKIP_MPICXX
+#define OMPI_SKIP_MPICXX 1
+#endif
+#endif
+#endif
 
 /* Macro to hide a symbol from further preprocessor substitutions */
 #define H5_NO_EXPAND(x) (x)
