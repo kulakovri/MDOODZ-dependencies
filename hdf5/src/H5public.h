@@ -62,10 +62,6 @@
 #ifndef OMPI_SKIP_MPICXX
 #define OMPI_SKIP_MPICXX 1
 #endif
-#include <mpi.h>
-#ifndef MPI_FILE_NULL /* MPIO may be defined in mpi.h already */
-#include <mpio.h>
-#endif
 #endif
 
 /* Macro to hide a symbol from further preprocessor substitutions */
