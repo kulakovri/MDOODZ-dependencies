@@ -2605,18 +2605,6 @@ struct h5_long_options {
 H5_DLL int H5_get_option(int argc, const char *const *argv, const char *opt,
                          const struct h5_long_options *l_opt);
 
-#ifdef H5_HAVE_PARALLEL
-/* Generic MPI functions */
-H5_DLL hsize_t H5_mpi_set_bigio_count(hsize_t new_count);
-H5_DLL hsize_t H5_mpi_get_bigio_count(void);
-H5_DLL herr_t  H5_mpi_comm_dup(MPI_Comm comm, MPI_Comm *comm_new);
-H5_DLL herr_t  H5_mpi_info_dup(MPI_Info info, MPI_Info *info_new);
-H5_DLL herr_t  H5_mpi_comm_free(MPI_Comm *comm);
-H5_DLL herr_t  H5_mpi_info_free(MPI_Info *info);
-H5_DLL herr_t  H5_mpi_comm_cmp(MPI_Comm comm1, MPI_Comm comm2, int *result);
-H5_DLL herr_t  H5_mpi_info_cmp(MPI_Info info1, MPI_Info info2, int *result);
-H5_DLL herr_t  H5_mpio_create_large_type(hsize_t num_elements, MPI_Aint stride_bytes, MPI_Datatype old_type,
-                                         MPI_Datatype *new_type);
 #endif /* H5_HAVE_PARALLEL */
 
 /* Functions for debugging */
