@@ -690,6 +690,54 @@ if (HDF5_ENABLE_HDFS)
   endif ()
 endif ()
 
+#-----------------------------------------------------------------------------
+# Option to Enable MPI Parallel
+#-----------------------------------------------------------------------------
+option (HDF5_ENABLE_PARALLEL "Enable parallel build (requires MPI)" OFF)
+if (HDF5_ENABLE_PARALLEL)
+  find_package(MPI REQUIRED)
+  if (MPI_C_FOUND)
+    set (H5_HAVE_PARALLEL 1)
+    # MPI checks, only do these if MPI_C_FOUND is true, otherwise they always fail
+    # and once set, they are cached as false and not regenerated
+    set (CMAKE_REQUIRED_LIBRARIES "${MPI_C_LIBRARIES}")
+    set (CMAKE_REQUIRED_INCLUDES "${MPI_C_INCLUDE_DIRS}")
+    # Used by Fortran + MPI
+    CHECK_SYMBOL_EXISTS (MPI_Comm_c2f "mpi.h"  H5_HAVE_MPI_MULTI_LANG_Comm)
+    CHECK_SYMBOL_EXISTS (MPI_Info_c2f "mpi.h"  H5_HAVE_MPI_MULTI_LANG_Info)
+
+    # Used by Parallel Compression feature
+    set (PARALLEL_FILTERED_WRITES ON)
+    CHECK_SYMBOL_EXISTS (MPI_Mprobe "mpi.h" H5_HAVE_MPI_Mprobe)
+    CHECK_SYMBOL_EXISTS (MPI_Imrecv "mpi.h" H5_HAVE_MPI_Imrecv)
+    if (NOT H5_HAVE_MPI_Mprobe OR NOT H5_HAVE_MPI_Imrecv)
+      message (WARNING "The MPI_Mprobe and/or MPI_Imrecv functions could not be located.
+               Parallel writes of filtered data will be disabled.")
+      set (PARALLEL_FILTERED_WRITES OFF)
+    endif ()
+
+    # Used by big I/O feature
+    set (LARGE_PARALLEL_IO ON)
+    CHECK_SYMBOL_EXISTS (MPI_Get_elements_x "mpi.h" H5_HAVE_MPI_Get_elements_x)
+    CHECK_SYMBOL_EXISTS (MPI_Type_size_x "mpi.h" H5_HAVE_MPI_Type_size_x)
+    if (NOT H5_HAVE_MPI_Get_elements_x OR NOT H5_HAVE_MPI_Type_size_x)
+      message (WARNING "The MPI_Get_elements_x and/or MPI_Type_size_x functions could not be located.
+               Reading/Writing >2GB of data in a single parallel I/O operation will be disabled.")
+      set (LARGE_PARALLEL_IO OFF)
+    endif ()
+  else ()
+    message (FATAL_ERROR "Parallel libraries not found")
+  endif ()
+endif ()
+
+# Parallel IO usage requires MPI to be Linked and Included
+if (H5_HAVE_PARALLEL)
+  set (LINK_LIBS ${LINK_LIBS} ${MPI_C_LIBRARIES})
+  if (MPI_C_LINK_FLAGS)
+    set (CMAKE_EXE_LINKER_FLAGS "${MPI_C_LINK_FLAGS} ${CMAKE_EXE_LINKER_FLAGS}")
+  endif ()
+endif ()
+
 #option (DEFAULT_API_VERSION "Enable v1.14 API (v16, v18, v110, v112, v114)" "v114")
 set (DEFAULT_API_VERSION "v114" CACHE STRING "Enable v1.14 API (v16, v18, v110, v112, v114)")
 set_property (CACHE DEFAULT_API_VERSION PROPERTY STRINGS v16 v18 v110 v112 v114)
