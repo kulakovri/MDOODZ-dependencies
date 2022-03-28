@@ -686,7 +686,7 @@ done:
 /*-------------------------------------------------------------------------
  * Function:    H5E__close_msg
  *
- * Purpose:     Private function to close an error message.
+ * Purpose:     Private function to close an error messge.
  *
  * Return:      SUCCEED/FAIL
  *

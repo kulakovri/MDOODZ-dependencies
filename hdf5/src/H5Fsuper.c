@@ -375,7 +375,7 @@ H5F__super_read(H5F_t *f, H5P_genplist_t *fa_plist, hbool_t initial_read)
         if (0 == mpi_rank) {
             herr_t status;
 
-            /* Try detecting file's signature */
+            /* Try detecting file's siganture */
             /* (Don't leave before Bcast, to avoid hang on error) */
             H5E_BEGIN_TRY
             {
@@ -467,7 +467,7 @@ H5F__super_read(H5F_t *f, H5P_genplist_t *fa_plist, hbool_t initial_read)
      *
      * After upgrading low_bound, the library will check to ensure that the
      * superblock version does not exceed the version allowed by high_bound.
-     * Otherwise fail file open.
+     * Otherise fail file open.
      *
      * For details, please see RFC:Setting Bounds for Object Creation in HDF5 1.10.0.
      */

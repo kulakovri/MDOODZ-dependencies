@@ -89,7 +89,7 @@ const H5O_msg_class_t H5O_MSG_DTYPE[1] = {{
     H5O_DTYPE_ID,                              /* message id number		*/
     "datatype",                                /* message name for debugging	*/
     sizeof(H5T_t),                             /* native message size		*/
-    H5O_SHARE_IS_SHARABLE | H5O_SHARE_IN_OHDR, /* messages are shareable?       */
+    H5O_SHARE_IS_SHARABLE | H5O_SHARE_IN_OHDR, /* messages are sharable?       */
     H5O__dtype_shared_decode,                  /* decode message		*/
     H5O__dtype_shared_encode,                  /* encode message		*/
     H5O__dtype_copy,                           /* copy the native value	*/
@@ -1731,7 +1731,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
         case H5T_NO_CLASS:
         case H5T_NCLASSES:
         default:
-            HDsnprintf(buf, sizeof(buf), "H5T_CLASS_%d", (int)(dt->shared->type));
+            HDsprintf(buf, "H5T_CLASS_%d", (int)(dt->shared->type));
             s = buf;
             break;
     } /* end switch */
@@ -1746,7 +1746,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
         HDfprintf(stream, "%*s%-*s %u\n", indent, "", fwidth,
                   "Number of members:", dt->shared->u.compnd.nmembs);
         for (i = 0; i < dt->shared->u.compnd.nmembs; i++) {
-            HDsnprintf(buf, sizeof(buf), "Member %u:", i);
+            HDsprintf(buf, "Member %u:", i);
             HDfprintf(stream, "%*s%-*s %s\n", indent, "", fwidth, buf, dt->shared->u.compnd.memb[i].name);
             HDfprintf(stream, "%*s%-*s %lu\n", indent + 3, "", MAX(0, fwidth - 3),
                       "Byte offset:", (unsigned long)(dt->shared->u.compnd.memb[i].offset));
@@ -1759,7 +1759,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
         HDfprintf(stream, "%*s%-*s %u\n", indent, "", fwidth,
                   "Number of members:", dt->shared->u.enumer.nmembs);
         for (i = 0; i < dt->shared->u.enumer.nmembs; i++) {
-            HDsnprintf(buf, sizeof(buf), "Member %u:", i);
+            HDsprintf(buf, "Member %u:", i);
             HDfprintf(stream, "%*s%-*s %s\n", indent, "", fwidth, buf, dt->shared->u.enumer.name[i]);
             HDfprintf(stream, "%*s%-*s 0x", indent, "", fwidth, "Raw bytes of value:");
             for (k = 0; k < dt->shared->parent->shared->size; k++)
@@ -1799,14 +1799,13 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
             case H5T_CSET_RESERVED_13:
             case H5T_CSET_RESERVED_14:
             case H5T_CSET_RESERVED_15:
-                HDsnprintf(buf, sizeof(buf), "H5T_CSET_RESERVED_%d", (int)(dt->shared->u.atomic.u.s.cset));
+                HDsprintf(buf, "H5T_CSET_RESERVED_%d", (int)(dt->shared->u.atomic.u.s.cset));
                 s = buf;
                 break;
 
             case H5T_CSET_ERROR:
             default:
-                HDsnprintf(buf, sizeof(buf), "Unknown character set: %d",
-                           (int)(dt->shared->u.atomic.u.s.cset));
+                HDsprintf(buf, "Unknown character set: %d", (int)(dt->shared->u.atomic.u.s.cset));
                 s = buf;
                 break;
         } /* end switch */
@@ -1838,14 +1837,13 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
             case H5T_STR_RESERVED_13:
             case H5T_STR_RESERVED_14:
             case H5T_STR_RESERVED_15:
-                HDsnprintf(buf, sizeof(buf), "H5T_STR_RESERVED_%d", (int)(dt->shared->u.atomic.u.s.pad));
+                HDsprintf(buf, "H5T_STR_RESERVED_%d", (int)(dt->shared->u.atomic.u.s.pad));
                 s = buf;
                 break;
 
             case H5T_STR_ERROR:
             default:
-                HDsnprintf(buf, sizeof(buf), "Unknown string padding: %d",
-                           (int)(dt->shared->u.atomic.u.s.pad));
+                HDsprintf(buf, "Unknown string padding: %d", (int)(dt->shared->u.atomic.u.s.pad));
                 s = buf;
                 break;
         } /* end switch */
@@ -1864,7 +1862,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
             case H5T_VLEN_BADTYPE:
             case H5T_VLEN_MAXTYPE:
             default:
-                HDsnprintf(buf, sizeof(buf), "H5T_VLEN_%d", dt->shared->u.vlen.type);
+                HDsprintf(buf, "H5T_VLEN_%d", dt->shared->u.vlen.type);
                 s = buf;
                 break;
         } /* end switch */
@@ -1882,7 +1880,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
             case H5T_LOC_BADLOC:
             case H5T_LOC_MAXLOC:
             default:
-                HDsnprintf(buf, sizeof(buf), "H5T_LOC_%d", (int)dt->shared->u.vlen.loc);
+                HDsprintf(buf, "H5T_LOC_%d", (int)dt->shared->u.vlen.loc);
                 s = buf;
                 break;
         } /* end switch */
@@ -1913,13 +1911,13 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
                 case H5T_CSET_RESERVED_13:
                 case H5T_CSET_RESERVED_14:
                 case H5T_CSET_RESERVED_15:
-                    HDsnprintf(buf, sizeof(buf), "H5T_CSET_RESERVED_%d", (int)(dt->shared->u.vlen.cset));
+                    HDsprintf(buf, "H5T_CSET_RESERVED_%d", (int)(dt->shared->u.vlen.cset));
                     s = buf;
                     break;
 
                 case H5T_CSET_ERROR:
                 default:
-                    HDsnprintf(buf, sizeof(buf), "Unknown character set: %d", (int)(dt->shared->u.vlen.cset));
+                    HDsprintf(buf, "Unknown character set: %d", (int)(dt->shared->u.vlen.cset));
                     s = buf;
                     break;
             } /* end switch */
@@ -1951,13 +1949,13 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
                 case H5T_STR_RESERVED_13:
                 case H5T_STR_RESERVED_14:
                 case H5T_STR_RESERVED_15:
-                    HDsnprintf(buf, sizeof(buf), "H5T_STR_RESERVED_%d", (int)(dt->shared->u.vlen.pad));
+                    HDsprintf(buf, "H5T_STR_RESERVED_%d", (int)(dt->shared->u.vlen.pad));
                     s = buf;
                     break;
 
                 case H5T_STR_ERROR:
                 default:
-                    HDsnprintf(buf, sizeof(buf), "Unknown string padding: %d", (int)(dt->shared->u.vlen.pad));
+                    HDsprintf(buf, "Unknown string padding: %d", (int)(dt->shared->u.vlen.pad));
                     s = buf;
                     break;
             } /* end switch */
@@ -1997,7 +1995,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
 
             case H5T_ORDER_ERROR:
             default:
-                HDsnprintf(buf, sizeof(buf), "H5T_ORDER_%d", dt->shared->u.atomic.order);
+                HDsprintf(buf, "H5T_ORDER_%d", dt->shared->u.atomic.order);
                 s = buf;
                 break;
         } /* end switch */
@@ -2071,9 +2069,9 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
                 case H5T_NPAD:
                 default:
                     if (dt->shared->u.atomic.u.f.pad < 0)
-                        HDsnprintf(buf, sizeof(buf), "H5T_PAD_%d", -(dt->shared->u.atomic.u.f.pad));
+                        HDsprintf(buf, "H5T_PAD_%d", -(dt->shared->u.atomic.u.f.pad));
                     else
-                        HDsnprintf(buf, sizeof(buf), "bit-%d", dt->shared->u.atomic.u.f.pad);
+                        HDsprintf(buf, "bit-%d", dt->shared->u.atomic.u.f.pad);
                     s = buf;
                     break;
             } /* end switch */
@@ -2094,7 +2092,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
 
                 case H5T_NORM_ERROR:
                 default:
-                    HDsnprintf(buf, sizeof(buf), "H5T_NORM_%d", (int)(dt->shared->u.atomic.u.f.norm));
+                    HDsprintf(buf, "H5T_NORM_%d", (int)(dt->shared->u.atomic.u.f.norm));
                     s = buf;
             } /* end switch */
             HDfprintf(stream, "%*s%-*s %s\n", indent, "", fwidth, "Normalization:", s);
@@ -2131,7 +2129,7 @@ H5O__dtype_debug(H5F_t *f, const void *mesg, FILE *stream, int indent, int fwidt
                 case H5T_SGN_ERROR:
                 case H5T_NSGN:
                 default:
-                    HDsnprintf(buf, sizeof(buf), "H5T_SGN_%d", (int)(dt->shared->u.atomic.u.i.sign));
+                    HDsprintf(buf, "H5T_SGN_%d", (int)(dt->shared->u.atomic.u.i.sign));
                     s = buf;
                     break;
             } /* end switch */

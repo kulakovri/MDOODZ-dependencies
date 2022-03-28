@@ -115,8 +115,8 @@ int main(void)
   for (currentArg = llwidthArgs; *currentArg != NULL; currentArg++)
     {
     char formatString[64];
-    snprintf(formatString, sizeof(formatString), "%%%sd", *currentArg);
-    snprintf(s, 128, formatString, x);
+    sprintf(formatString, "%%%sd", *currentArg);
+    sprintf(s, formatString, x);
     if (strcmp(s, "1099511627776") == 0)
       {
       printf("PRINTF_LL_WIDTH=[%s]\n", *currentArg);

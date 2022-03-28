@@ -200,18 +200,7 @@ H5_DLL herr_t H5ESget_count(hid_t es_id, size_t *count);
 /**
  * \ingroup H5ES
  *
- * \brief Retrieves the next operation counter to be assigned in an event set
- *
- * \es_id
- * \param[out] counter The next counter value to be assigned to an event
- * \returns \herr_t
- *
- * \details H5ESget_op_counter() retrieves the \p counter that will be assigned
- *          to the next operation inserted into the event set \p es_id.
- *
- * \note This is designed for wrapper libraries mainly, to use as a mechanism
- *       for matching operations inserted into the event set with possible
- *       errors that occur.
+ * \todo Fill in the blanks!
  *
  * \since 1.13.0
  *

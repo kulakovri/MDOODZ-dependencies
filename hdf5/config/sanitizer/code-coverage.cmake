@@ -80,17 +80,10 @@ option(
   OFF)
 
 # Programs
-if(WIN32)
-  find_program(LLVM_COV_PATH llvm-cov PATHS ENV VS2019INSTALLDIR PATH_SUFFIXES "VC/Tools/Llvm/x64/bin")
-  find_program(LLVM_PROFDATA_PATH llvm-profdata PATHS ENV VS2019INSTALLDIR PATH_SUFFIXES "VC/Tools/Llvm/x64/bin")
-  find_program(LCOV_PATH lcov PATHS ENV VS2019INSTALLDIR PATH_SUFFIXES "VC/Tools/Llvm/x64/bin")
-  find_program(GENHTML_PATH genhtml PATHS ENV VS2019INSTALLDIR PATH_SUFFIXES "VC/Tools/Llvm/x64/bin")
-else()
-  find_program(LLVM_COV_PATH llvm-cov)
-  find_program(LLVM_PROFDATA_PATH llvm-profdata)
-  find_program(LCOV_PATH lcov)
-  find_program(GENHTML_PATH genhtml)
-endif()
+find_program(LLVM_COV_PATH llvm-cov)
+find_program(LLVM_PROFDATA_PATH llvm-profdata)
+find_program(LCOV_PATH lcov)
+find_program(GENHTML_PATH genhtml)
 
 # Variables
 set(CMAKE_COVERAGE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/ccov)

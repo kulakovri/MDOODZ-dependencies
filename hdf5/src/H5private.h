@@ -44,12 +44,10 @@
 #include <sys/time.h>
 #endif
 #ifdef H5_HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #ifdef H5_HAVE_PWD_H
 #include <pwd.h>
 #endif
-#ifdef H5_HAVE_WAITPID
+#include <unistd.h>
 #include <sys/wait.h>
 #endif
 
@@ -172,7 +170,7 @@
  */
 #define BEGIN_MPE_LOG                                                                                        \
     if (H5_MPEinit_g) {                                                                                      \
-        snprintf(p_event_start, sizeof(p_event_start), "start %s", __func__);                                \
+        sprintf(p_event_start, "start %s", __func__);                                                        \
         if (eventa(__func__) == -1 && eventb(__func__) == -1) {                                              \
             const char *p_color = "red";                                                                     \
             eventa(__func__)    = MPE_Log_get_event_number();                                                \
@@ -576,7 +574,7 @@ typedef off_t       h5_stat_size_t;
 #define HDoff_t off_t
 #endif
 
-/* Redefine all the POSIX and C functions.  We should never see an
+#/* Redefine all the POSIX and C functions.  We should never see an
  * undecorated POSIX or C function (or any other non-HDF5 function)
  * in the source.
  */
@@ -1994,7 +1992,7 @@ extern H5_api_t H5_g;
 #define H5_API_LOCK
 #define H5_API_UNLOCK
 
-/* disable cancellability (sequential version) */
+/* disable cancelability (sequential version) */
 #define H5_API_UNSET_CANCEL
 #define H5_API_SET_CANCEL
 
@@ -2602,8 +2600,7 @@ struct h5_long_options {
                                  */
 };
 
-H5_DLL int H5_get_option(int argc, const char *const *argv, const char *opt,
-                         const struct h5_long_options *l_opt);
+H5_DLL int H5_get_option(int argc, const char **argv, const char *opt, const struct h5_long_options *l_opt);
 
 #ifdef H5_HAVE_PARALLEL
 /* Generic MPI functions */

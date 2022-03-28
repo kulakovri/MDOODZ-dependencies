@@ -508,7 +508,7 @@ H5_DLL int H5Idec_type_ref(H5I_type_t type);
  *
  * \brief Retrieves the reference count on an ID type
  *
- * \param[in] type The identifier of the type whose reference count is to be retrieved
+ * \param[in] type The identifier of the type whose reference count is to be retieved
  *
  * \return Returns the current reference count on success, negative on failure.
  *

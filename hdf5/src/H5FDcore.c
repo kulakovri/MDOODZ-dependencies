@@ -1522,7 +1522,7 @@ done:
  *              Addendum -- 12/2/11
  *              For file images opened with the core file driver, it is
  *              necessary that we avoid reallocating the core file driver's
- *              buffer unnecessarily.
+ *              buffer uneccessarily.
  *
  *              To this end, I have made the following functional changes
  *              to this function.

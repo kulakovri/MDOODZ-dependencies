@@ -23,7 +23,7 @@ AC_PREREQ([2.69])
 ## NOTE: Do not forget to change the version number here when we do a
 ## release!!!
 ##
-AC_INIT([HDF5], [1.13.1-1], [help@hdfgroup.org])
+AC_INIT([HDF5], [1.13.0], [help@hdfgroup.org])
 
 AC_CONFIG_SRCDIR([src/H5.c])
 AC_CONFIG_HEADERS([src/H5config.h])
@@ -75,7 +75,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])]) # use silent rules where a
 ##
 ## By default, maintainer mode is enabled in development branches and disabled
 ## in release branches.
-AM_MAINTAINER_MODE([enable])
+AM_MAINTAINER_MODE([disable])
 
 ## ----------------------------------------------------------------------
 ## Set prefix default (install directory) to a directory in the build area.
@@ -390,7 +390,7 @@ if test "X$CC_BASENAME" = "Xclang"; then
   # 'address;undefined'.  Which and which combinations of these are
   #  supported varies by compiler version, but unsupported options
   # or combinations will result in configure errors reported in config.log.
-  # Comma separated lists of sanitize options will be entered intact in
+  # Comma separated lists of sanitize options wil be entered intact in
   # one -fsanitize=<list> flag.  Space separated lists will be entered in
   # separate -fsanitize=<item> flags.
   # NOTE: No sanity checking done here!
@@ -421,14 +421,14 @@ AC_ARG_ENABLE([build-mode],
                                (i.e.: a 'clean slate' configuration).
                                All these settings can be overridden by using
                                specific configure flags.
-                               [default=debug]
+                               [default=production]
                                ])],
               [BUILD_MODE=$enableval])
 
 ## Set the default
 ## Depends on branch, set via script at branch creation time
 if test "X-$BUILD_MODE" = X- ; then
-    BUILD_MODE=debug
+    BUILD_MODE=production
 fi
 
 ## Allow this variable to be substituted in
@@ -599,7 +599,7 @@ if test "X$HDF_FORTRAN" = "Xyes"; then
   AC_SUBST([OBJECT_NAMELEN_DEFAULT_F])
 
   ## --------------------------------------------------------------------
-  ## Fortran source extension
+  ## Fortran source extention
   ##
   AC_FC_SRCEXT([f90])
 
@@ -1122,12 +1122,6 @@ else
   AC_MSG_RESULT([no])
 fi
 
-## These need to be exposed for some tests.
-AC_SUBST([H5_UTILS_TEST_BUILDDIR])
-H5_UTILS_TEST_BUILDDIR='utils/test'
-AC_SUBST([H5_TEST_BUILDDIR])
-H5_TEST_BUILDDIR='test'
-
 ## ----------------------------------------------------------------------
 ## Check if they would like to disable building tools
 ##
@@ -1220,7 +1214,7 @@ if test "X$HDF5_DOXYGEN" = "Xyes"; then
   DOXYGEN_HTML_HEADER='$(SRCDIR)/doxygen/hdf5_header.html'
   DOXYGEN_HTML_FOOTER='$(SRCDIR)/doxygen/hdf5_footer.html'
   DOXYGEN_HTML_EXTRA_STYLESHEET='$(SRCDIR)/doxygen/hdf5doxy.css'
-  DOXYGEN_HTML_EXTRA_FILES='$(SRCDIR)/doxygen/hdf5_navtree_hacks.js $(SRCDIR)/doxygen/img/FF-IH_FileGroup.gif $(SRCDIR)/doxygen/img/FF-IH_FileObject.gif $(SRCDIR)/doxygen/img/FileFormatSpecChunkDiagram.jpg $(SRCDIR)/doxygen/img/ftv2node.png $(SRCDIR)/doxygen/img/ftv2pnode.png $(SRCDIR)/doxygen/img/HDFG-logo.png $(SRCDIR)/doxygen/img/IOFlow2.gif $(SRCDIR)/doxygen/img/IOFlow3.gif $(SRCDIR)/doxygen/img/IOFlow.gif $(SRCDIR)/doxygen/img/PaletteExample1.gif $(SRCDIR)/doxygen/img/Palettes.fm.anc.gif'
+  DOXYGEN_HTML_EXTRA_FILES='$(SRCDIR)/doxygen/hdf5_navtree_hacks.js $(SRCDIR)/doxygen/img/ftv2node.png $(SRCDIR)/doxygen/img/ftv2pnode.png'
   DOXYGEN_TAG_FILE=hdf5.tag
   DOXYGEN_SERVER_BASED_SEARCH=NO
   DOXYGEN_EXTERNAL_SEARCH=NO
@@ -1692,7 +1686,7 @@ fi
 ## command-line switch. The value is an include path and/or a library path.
 ## If the library path is specified then it must be preceded by a comma.
 ##
-AC_SUBST([LL_PATH])
+AC_SUBST([LL_PATH]) 
 AC_SUBST([USE_FILTER_SZIP]) USE_FILTER_SZIP="no"
 AC_ARG_WITH([szlib],
             [AS_HELP_STRING([--with-szlib=DIR],
@@ -2154,7 +2148,7 @@ for hdf5_cv_printf_ll in ll l L q unknown; do
         ],[[
             char *s = malloc(128);
             long long x = (long long)1048576 * (long long)1048576;
-            snprintf(s,128,"%${hdf5_cv_printf_ll}d",x);
+            sprintf(s,"%${hdf5_cv_printf_ll}d",x);
             exit(strcmp(s,"1099511627776"));
         ]])]
    , [break],,[continue])
@@ -3043,7 +3037,7 @@ if test -n "$PARALLEL"; then
 fi
 
 ## ----------------------------------------------------------------------
-## Build parallel tools if parallel tools, parallel, and build tools options
+## Build parallel tools if parallel tools, parallel, and build tools options 
 ## are all enabled.
 ##
 AC_SUBST([PARALLEL_TOOLS])
@@ -3063,7 +3057,7 @@ if test "X${PARALLEL_TOOLS}" = "Xyes"; then
     AC_MSG_ERROR([--enable-tools is required for --enable-parallel-tools])
   fi
   if test "X${PARALLEL}" != "Xyes"; then
-    AC_MSG_ERROR([--enable-parallel is required for --enable-parallel-tools])
+    AC_MSG_ERROR([--enable-parallel is required for --enable-parallel-tools])  
   fi
 fi
 
@@ -3485,7 +3479,7 @@ fi
 
 ## ----------------------------------------------------------------------
 ## Decide whether the data accuracy has higher priority during data
-## conversions.  If not, some hard conversions will still be preferred even
+## conversions.  If not, some hard conversions will still be prefered even
 ## though the data may be wrong (for example, some compilers don't
 ## support denormalized floating values) to maximize speed.
 ##
@@ -3499,7 +3493,7 @@ AC_ARG_ENABLE([dconv-accuracy],
 if test "$DATA_ACCURACY" = "yes"; then
   AC_MSG_RESULT([yes])
   AC_DEFINE([WANT_DATA_ACCURACY], [1],
-            [Data accuracy is preferred to speed during data conversions])
+            [Data accuracy is prefered to speed during data conversions])
 else
   AC_MSG_RESULT([no])
 fi
@@ -3675,8 +3669,8 @@ fi
 ## and installed with the libraries (used to generate libhdf5.settings).
 ##
 
-## HDF5 version from the first line of the README.md file.
-H5_VERSION="`cut -d' ' -f3 $srcdir/README.md | head -1`"
+## HDF5 version from the first line of the README.txt file.
+H5_VERSION="`cut -d' ' -f3 $srcdir/README.txt | head -1`"
 AC_SUBST([H5_VERSION])
 
 ## Configuration date

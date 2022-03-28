@@ -229,9 +229,9 @@ set (HDF5_JAVA_JNI_SRC_DIR         ${HDF5_SOURCE_DIR}/java/src/jni)
 set (HDF5_JAVA_HDF5_SRC_DIR        ${HDF5_SOURCE_DIR}/java/src/hdf)
 set (HDF5_JAVA_TEST_SRC_DIR        ${HDF5_SOURCE_DIR}/java/test)
 set (HDF5_JAVA_LIB_DIR             ${HDF5_SOURCE_DIR}/java/lib)
-set (HDF5_JAVA_LOGGING_JAR         ${HDF5_SOURCE_DIR}/java/lib/slf4j-api-1.7.33.jar)
-set (HDF5_JAVA_LOGGING_NOP_JAR     ${HDF5_SOURCE_DIR}/java/lib/ext/slf4j-nop-1.7.33.jar)
-set (HDF5_JAVA_LOGGING_SIMPLE_JAR  ${HDF5_SOURCE_DIR}/java/lib/ext/slf4j-simple-1.7.33.jar)
+set (HDF5_JAVA_LOGGING_JAR         ${HDF5_SOURCE_DIR}/java/lib/slf4j-api-1.7.25.jar)
+set (HDF5_JAVA_LOGGING_NOP_JAR     ${HDF5_SOURCE_DIR}/java/lib/ext/slf4j-nop-1.7.25.jar)
+set (HDF5_JAVA_LOGGING_SIMPLE_JAR  ${HDF5_SOURCE_DIR}/java/lib/ext/slf4j-simple-1.7.25.jar)
 set (HDF5_DOXYGEN_DIR              ${HDF5_SOURCE_DIR}/doxygen)
 
 #-----------------------------------------------------------------------------
@@ -477,7 +477,7 @@ endif ()
 #-----------------------------------------------------------------------------
 option (BUILD_STATIC_LIBS "Build Static Libraries" ON)
 set (H5_ENABLE_STATIC_LIB NO)
-option (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+option (BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 set (H5_ENABLE_SHARED_LIB NO)
 option (ONLY_SHARED_LIBS "Only Build Shared Libraries" OFF)
 mark_as_advanced (ONLY_SHARED_LIBS)
@@ -486,7 +486,7 @@ if (BUILD_STATIC_LIBS)
   set (H5_ENABLE_STATIC_LIB YES)
 endif ()
 if (BUILD_SHARED_LIBS)
-  set (H5_ENABLE_SHARED_LIB NO)
+  set (H5_ENABLE_SHARED_LIB YES)
 endif ()
 
 # Force only shared libraries if all OFF
@@ -929,7 +929,7 @@ endif ()
 #-----------------------------------------------------------------------------
 # Dashboard and Testing Settings
 #-----------------------------------------------------------------------------
-option (BUILD_TESTING "Build HDF5 Unit Testing" OFF)
+option (BUILD_TESTING "Build HDF5 Unit Testing" ON)
 if (BUILD_TESTING)
   set (DART_TESTING_TIMEOUT 1200
       CACHE STRING

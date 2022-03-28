@@ -80,7 +80,7 @@ extern "C" {
  *
  * `magic` (uint32_t)
  *      A "unique" number identifying the structure and endianness of
- *      transmitting machine.
+ *      transmitting maching.
  *      Must be set to H5FD_MIRROR_XMIT_MAGIC native to the VFD "sender".
  *
  * `version` (uint8_t)
@@ -214,13 +214,13 @@ typedef struct H5FD_mirror_xmit_open_t {
  *
  * `status` (uint32_t)
  *      Number indicating whether the command was successful or if an
- *      occurred.
+ *      occured.
  *      Allowed values are H5FD_MIRROR_STATUS_OK and
  *      H5FD_MIRROR_STATUS_ERROR.
  *
  * `message` (char[])
  *      Error message. Populated if and only if there was a problem.
- *      It is possible that a message may reach the end of the allotted
+ *      It is possible that a message may reach the end of the alloted
  *      space without a NULL terminator -- the onus is on the programmer to
  *      handle this situation.
  *
